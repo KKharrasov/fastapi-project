@@ -2,8 +2,8 @@ from typing import List
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from core.utils import get_db
-from . import service
-from .schemas import PostCreate, PostList
+from microblog import service
+from microblog.schemas import PostCreate, PostList
 router = APIRouter()
 
 

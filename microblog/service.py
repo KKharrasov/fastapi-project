@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
-from .models import Post
-from .schemas import PostCreate
+from microblog.models import Post
+from microblog.schemas import PostCreate
 
 def get_post_list(db: Session):
     return db.query(Post).all()
