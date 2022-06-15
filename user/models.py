@@ -9,5 +9,5 @@ class User(Base):
     email = Column(String, unique=True)
     password = Column(String)
     date = Column(DateTime)
-    is_admin = Column(Boolean, default=False)
-    is_active = Column(Boolean, default=False)
+    # is_admin = Column(Boolean, default=False)
+    # is_active = Column(Boolean, default=False)
