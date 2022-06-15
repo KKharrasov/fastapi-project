@@ -1,14 +1,13 @@
-from fastapi_users import models
+from pydantic import BaseModel
+from datetime import datetime
 
 
-# class User(models.BaseUser):
-#     pass
-#
-# class UserCreate(User, models.BaseUserCreate):
-#     pass
-#
-# class UserUpdate(User, models.BaseUserUpdate):
-#     pass
-#
-# class UserDB(User, models.BaseUserDB):
-#     pass
+
+class UserBase(BaseModel):
+    date: datetime
+
+class UserCreate(UserBase):
+    pass
+
+class UserList(UserBase):
+    id: int
