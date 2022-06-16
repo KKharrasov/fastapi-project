@@ -3,15 +3,16 @@ from typing import Union
 
 
 
-class UserIn(BaseModel):
-    username: str
+class UserIn(BaseModel):    # авторизация
+    # username: str
+    password: str
     email: str
-    full_name: Union[str, None] = None
+    #full_name: Union[str, None] = None
 
     class Config:
         orm_mode = True
 
-class UserCreate(BaseModel):
+class UserCreate(BaseModel):    # регистрация
     username: str
     password: str
     email: str
@@ -23,10 +24,6 @@ class UserCreate(BaseModel):
 
 class UserList(UserCreate):
     id: int
-
-
-class UserInDB(UserCreate):
-    hashed_password: str
 
 
 # class Token(BaseModel):
