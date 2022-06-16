@@ -3,7 +3,7 @@ from typing import Union
 
 
 
-class User(BaseModel):
+class UserIn(BaseModel):
     username: str
     email: str
     full_name: Union[str, None] = None
@@ -11,12 +11,22 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
-class UserCreate(User):
+class UserCreate(BaseModel):
+    username: str
     password: str
+    email: str
+    full_name: Union[str, None] = None
+
+    class Config:
+        orm_mode = True
 
 
-class UserList(User):
+class UserList(UserCreate):
     id: int
+
+
+class UserInDB(UserCreate):
+    hashed_password: str
 
 
 # class Token(BaseModel):
@@ -26,7 +36,4 @@ class UserList(User):
 #
 # class TokenData(BaseModel):
 #     username: Union[str, None] = None
-#
-#
-# class UserInDB(User):
-#     hashed_password: str
+

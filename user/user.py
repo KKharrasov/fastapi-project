@@ -7,7 +7,7 @@ from user.schemas import UserCreate, UserList
 router = APIRouter()
 
 
-@router.get("/users/", response_model=List[UserList])
+@router.get("/users/", response_model=List[UserList], response_model_exclude_unset=True)
 def user_list(db: Session = Depends(get_db)):
     return service.get_user_list(db)
 

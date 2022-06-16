@@ -2,3 +2,5 @@ idea
 .idea
 venv
 __pycache__
+Pipfile.lock
+migrations
