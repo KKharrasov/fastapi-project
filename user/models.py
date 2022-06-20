@@ -1,6 +1,7 @@
 from sqlalchemy import Column, String, Integer, DateTime, Boolean
 from core.db import Base
 from typing import Union
+# from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = "user"
@@ -9,7 +10,6 @@ class User(Base):
     username = Column(String, unique=True)
     email = Column(String, unique=True)
     password = Column(String)
-    hashed_password = Column(String)
     date = Column(DateTime)
     full_name: Union[str, None] = None
     # is_admin = Column(Boolean, default=False)

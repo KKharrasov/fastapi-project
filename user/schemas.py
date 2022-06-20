@@ -3,34 +3,37 @@ from typing import Union
 
 
 
-class UserIn(BaseModel):    # авторизация
-    # username: str
-    password: str
+class UserBase(BaseModel):
     email: str
-    #full_name: Union[str, None] = None
 
     class Config:
         orm_mode = True
 
-class UserCreate(BaseModel):    # регистрация
+class UserCreate(UserBase):
     username: str
     password: str
-    email: str
-    full_name: Union[str, None] = None
+
+
+class User(UserBase):
+    id: int
+#    is_active: bool
 
     class Config:
         orm_mode = True
+
+class UserDB(UserCreate):
+    pass
 
 
 class UserList(UserCreate):
     id: int
 
 
-# class Token(BaseModel):
-#     access_token: str
-#     token_type: str
-#
-#
-# class TokenData(BaseModel):
-#     username: Union[str, None] = None
+class Token(BaseModel):
+    access_token: str
+    token_type: str
+
+
+class TokenData(BaseModel):
+    username: Union[str, None] = None
 
