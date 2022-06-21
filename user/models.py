@@ -1,7 +1,8 @@
 from sqlalchemy import Column, String, Integer, DateTime, Boolean
 from core.db import Base
 from typing import Union
-# from sqlalchemy.orm import relationship
+
+
 
 class User(Base):
     __tablename__ = "user"

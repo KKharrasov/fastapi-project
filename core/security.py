@@ -1,7 +1,6 @@
 from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
-from core.utils import get_db
 from passlib.context import CryptContext
 from user.schemas import UserCreate, UserDB, TokenData, Token
 from user.models import User
@@ -9,6 +8,7 @@ from user import service
 from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from typing import Union
+from core import utils
 
 
 SECRET_KEY = "8f4e9f9ae4cb3d6e6199f3a2bd05654054d7c68e170fcd12657a25374757be3e"
@@ -29,15 +29,6 @@ def get_password_hash(password: str):
     return pwd_context.hash(password)
 
 
-# def get_user(username: str, db: Session = Depends(get_db)):
-#     print(db)
-#     if username in db.query(User.username == username):
-#         #print(username)
-#         user_dict = db[username]
-#         return UserDB(**user_dict)
-
-
-
 def authenticate_user(username: str, password: str, db: Session):
     user = service.get_username(db, username)
     if not verify_password(password, user.password):
@@ -56,7 +47,7 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
     return encoded_jwt
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(utils.get_db)):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -70,10 +61,10 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    user = service.get_username(db=Session, username=token_data.username)
-    if user is None:
-        raise credentials_exception
-    return user
+    # user = service.get_username(db, username=token_data.username)
+    # if user is None:
+    #     raise credentials_exception
+    # return user
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):

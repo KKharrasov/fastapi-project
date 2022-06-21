@@ -5,21 +5,23 @@ from typing import Union
 
 class UserBase(BaseModel):
     email: str
+    username: str
 
     class Config:
         orm_mode = True
 
+
 class UserCreate(UserBase):
-    username: str
     password: str
 
 
-class User(UserBase):
+class UserUserovich(UserBase):
     id: int
     disabled: Union[bool, None] = None
 
     class Config:
         orm_mode = True
+
 
 class UserDB(UserCreate):
     pass
@@ -36,4 +38,3 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: Union[str, None] = None
-
