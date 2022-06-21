@@ -61,13 +61,13 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
         token_data = TokenData(username=username)
     except JWTError:
         raise credentials_exception
-    # user = service.get_username(db, username=token_data.username)
-    # if user is None:
-    #     raise credentials_exception
-    # return user
+    user = service.get_username(db, username=token_data.username)
+    if user is None:
+        raise credentials_exception
+    return user
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
-    if current_user.disabled:
-        raise HTTPException(status_code=400, detail="Inactive user")
+    # if current_user.disabled:
+    #     raise HTTPException(status_code=400, detail="Inactive user")
     return current_user

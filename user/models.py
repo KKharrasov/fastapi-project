@@ -13,4 +13,3 @@ class User(Base):
     password = Column(String)
     date = Column(DateTime)
     full_name: Union[str, None] = None
-    disabled: Column(Boolean)

@@ -17,7 +17,7 @@ class UserCreate(UserBase):
 
 class UserUserovich(UserBase):
     id: int
-    disabled: Union[bool, None] = None
+
 
     class Config:
         orm_mode = True
