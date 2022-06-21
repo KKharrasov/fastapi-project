@@ -1,6 +1,5 @@
-from sqlalchemy import Column, String, Integer, DateTime, Boolean
+from sqlalchemy import Column, String, Integer, Boolean
 from core.db import Base
-from typing import Union
 
 
 
@@ -11,5 +10,4 @@ class User(Base):
     username = Column(String, unique=True)
     email = Column(String, unique=True)
     password = Column(String)
-    date = Column(DateTime)
-    full_name: Union[str, None] = None
+    sup = Column(Boolean, default=False)

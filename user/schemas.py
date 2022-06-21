@@ -17,7 +17,7 @@ class UserCreate(UserBase):
 
 class UserUserovich(UserBase):
     id: int
-
+    sup: bool
 
     class Config:
         orm_mode = True
