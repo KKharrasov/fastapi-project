@@ -1,14 +1,13 @@
 from typing import List
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi.security import OAuth2PasswordRequestForm
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette import status
-from jose import JWTError, jwt
 from core.utils import get_db
 from user import service
 from core import security
 from datetime import timedelta
-from user.schemas import UserList, UserCreate, UserUserovich, Token
+from user.schemas import UserCreate, UserUserovich, Token
 
 
 

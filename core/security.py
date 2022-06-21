@@ -1,8 +1,8 @@
-from fastapi import Depends, FastAPI, HTTPException, status, APIRouter
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from fastapi import Depends, HTTPException, status, APIRouter
+from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from user.schemas import UserCreate, UserDB, TokenData, Token
+from user.schemas import TokenData
 from user.models import User
 from user import service
 from datetime import datetime, timedelta
@@ -68,6 +68,4 @@ async def get_current_user(token: str = Depends(oauth2_scheme), db: Session = De
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
-    # if current_user.disabled:
-    #     raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
