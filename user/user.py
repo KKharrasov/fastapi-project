@@ -7,7 +7,7 @@ from core.utils import get_db
 from user import service
 from core import security
 from datetime import timedelta
-from user.schemas import UserCreate, UserUserovich, Token
+from user.schemas import UserCreate, UserBase, Token
 
 
 
@@ -19,12 +19,12 @@ def user_create(user: UserCreate, db: Session = Depends(get_db)):
     return service.create_user(db, user)
 
 
-@router.get("/users/", response_model=List[UserUserovich])
+@router.get("/users/", response_model=List[UserBase])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return service.get_users(db, skip=skip, limit=limit)
 
 
-@router.get("/users/getuserbyid/{user_id}", response_model=UserUserovich)
+@router.get("/users/getuserbyid/{user_id}", response_model=UserBase)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = service.get_user(db, id=user_id)
     if db_user is None:
@@ -32,7 +32,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@router.get("/users/getuserbyusername/{username}", response_model=UserUserovich)
+@router.get("/users/getuserbyusername/{username}", response_model=UserBase)
 def read_user(username: str, db: Session = Depends(get_db)):
     db_user = service.get_username(db, username=username)
     if db_user is None:
@@ -56,11 +56,11 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/users/me/", response_model=UserUserovich)
-async def read_users_me(current_user: UserUserovich = Depends(security.get_current_active_user)):
+@router.get("/users/me/", response_model=UserBase)
+async def read_users_me(current_user: UserBase = Depends(security.get_current_active_user)):
     return current_user
 
 
 @router.get("/users/me/items/")
-async def read_own_items(current_user: UserUserovich = Depends(security.get_current_active_user)):
+async def read_own_items(current_user: UserBase = Depends(security.get_current_active_user)):
     return [{"item_id": "Foo", "owner": current_user.email}]

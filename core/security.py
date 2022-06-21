@@ -13,6 +13,8 @@ from core import utils
 
 SECRET_KEY = "8f4e9f9ae4cb3d6e6199f3a2bd05654054d7c68e170fcd12657a25374757be3e"
 ALGORITHM = "HS256"
+ADMIN_LOGIN = 'admin'
+ADMIN_PASSWORD = 'admin'
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

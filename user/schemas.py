@@ -7,16 +7,16 @@ BaseModel.Config.orm_mode = True
 
 
 class UserBase(BaseModel):
-    username: constr(min_length=3, max_length=20)
-    email: constr(min_length=3, max_length=20)
+    username: constr(min_length=3, max_length=200)
+    email: constr(min_length=3, max_length=200)
     id: int
-    su: bool
+    sup: bool
 
 
 class UserCreate(BaseModel):
-    email: constr(min_length=3, max_length=20)
-    username: constr(min_length=3, max_length=20)
-    password: constr(min_length=3, max_length=20)
+    email: constr(min_length=3, max_length=200)
+    username: constr(min_length=3, max_length=200)
+    password: constr(min_length=3, max_length=200)
 
 
 class UserDB(UserCreate):
