@@ -25,7 +25,7 @@ def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return service.get_users(db, skip=skip, limit=limit)
 
 
-@router.get("/users/{user_id}", response_model=UserUserovich)
+@router.get("/users/getuserbyid/{user_id}", response_model=UserUserovich)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = service.get_user(db, id=user_id)
     if db_user is None:
@@ -33,12 +33,13 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@router.get("/users/{username}", response_model=UserUserovich)
+@router.get("/users/getuserbyusername/{username}", response_model=UserUserovich)
 def read_user(username: str, db: Session = Depends(get_db)):
     db_user = service.get_username(db, username=username)
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return db_user
+
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
