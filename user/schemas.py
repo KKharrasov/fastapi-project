@@ -1,26 +1,22 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 from typing import Union
 
 
 
+BaseModel.Config.orm_mode = True
+
+
 class UserBase(BaseModel):
-    email: str
-    username: str
-
-    class Config:
-        orm_mode = True
-
-
-class UserCreate(UserBase):
-    password: str
-
-
-class UserUserovich(UserBase):
+    username: constr(min_length=3, max_length=20)
+    email: constr(min_length=3, max_length=20)
     id: int
-    sup: bool
+    su: bool
 
-    class Config:
-        orm_mode = True
+
+class UserCreate(BaseModel):
+    email: constr(min_length=3, max_length=20)
+    username: constr(min_length=3, max_length=20)
+    password: constr(min_length=3, max_length=20)
 
 
 class UserDB(UserCreate):
