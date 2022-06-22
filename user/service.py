@@ -25,15 +25,11 @@ def get_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
 
-def get_user_by_email(db: Session, email: str):
-    return db.query(User).filter(User.email == email).first()
-
-
 def get_users(db: Session, skip: int = 0, limit: int = 100):
     return db.query(User).offset(skip).limit(limit).all()
 
 def is_admin(user: User = Depends(get_user)):
-    if not user.su:
+    if not user.sup:
         raise HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail='Access denied',
