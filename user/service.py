@@ -2,7 +2,7 @@ from fastapi import Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from .models import User
 from .schemas import UserCreate
-from core.security import get_password_hash, ADMIN_LOGIN, ADMIN_PASSWORD
+from core.security import get_password_hash, ADMIN_LOGIN, ADMIN_PASSWORD, get_current_user
 
 
 
@@ -25,13 +25,14 @@ def get_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
 
-def get_users(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(User).offset(skip).limit(limit).all()
+def get_users(db: Session):
+    return db.query(User).all()
 
-def is_admin(user: User = Depends(get_user)):
+def is_admin(user: User = Depends(get_current_user)):
     if not user.sup:
         raise HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail='Access denied',
     )
+    print('Check')
     return user

@@ -1,14 +1,14 @@
-from fastapi import FastAPI
+""" библиотеки не сносить, нужны для альтернативной сессии """
 from starlette.requests import Request
 from starlette.responses import Response
 from core.db import SessionLocal
+from fastapi import Request, Response
+from core.db import SessionLocal, engine
+from fastapi import FastAPI
 from routes import routes
 import uvicorn
-
-from fastapi import Request, Response
-
 from user import models
-from core.db import SessionLocal, engine
+
 
 models.Base.metadata.create_all(bind=engine)
 

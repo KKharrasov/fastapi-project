@@ -7,21 +7,26 @@ from core.utils import get_db
 from user import service
 from core import security
 from datetime import timedelta
+
+from user.models import User
 from user.schemas import UserCreate, UserBase, Token
-
-
+from user.service import is_admin
 
 router = APIRouter()
 
 
-@router.post("/users/", response_model=UserCreate)
+@router.post("/register", response_model=UserCreate)
 def user_create(user: UserCreate, db: Session = Depends(get_db)):
     return service.create_user(db, user)
 
 
-@router.get("/users/", response_model=List[UserBase])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    return service.get_users(db, skip=skip, limit=limit)
+# @router.get("/users/", response_model=List[UserBase])
+# def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+#     return service.get_users(db, skip=skip, limit=limit)
+
+@router.get('/all_users', response_model=List[UserBase])
+def get_all_users(db: Session = Depends(get_db), admin: User = Depends(is_admin)):
+    return db.query(User).all()
 
 
 # @router.get("/users/getuserbyid/{user_id}", response_model=UserBase)
@@ -56,7 +61,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.get("/users/me/", response_model=UserBase)
+@router.get("/users/me", response_model=UserBase)
 async def read_users_me(current_user: UserBase = Depends(security.get_current_user)):
     return current_user
 
