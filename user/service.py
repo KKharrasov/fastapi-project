@@ -8,6 +8,11 @@ from core.security import get_password_hash, ADMIN_LOGIN, ADMIN_PASSWORD, get_cu
 
 def create_user(db: Session, user: UserCreate):
     user = User(**user.dict())
+    if user.username is not None or user.email is not None:
+        raise HTTPException(
+        status.HTTP_400_BAD_REQUEST,
+        detail='User already exists',
+    )
     if user.username == ADMIN_LOGIN and user.password == ADMIN_PASSWORD:
         user.sup = True
     user.password = get_password_hash(user.password)
