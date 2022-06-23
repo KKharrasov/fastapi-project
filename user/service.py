@@ -22,6 +22,7 @@ def create_user(db: Session, user: UserCreate):
     return user
 
 
+
 def get_user(db: Session, id: int):
     return db.query(User).filter(User.id == id).first()
 
