@@ -8,7 +8,7 @@ from core.security import get_password_hash, ADMIN_LOGIN, ADMIN_PASSWORD, get_cu
 
 def create_user(db: Session, user: UserCreate):
     user = User(**user.dict())
-    if user.username is not None or user.email is not None:
+    if get_username(db, user.username) or get_usermail(db, user.email):
         raise HTTPException(
         status.HTTP_400_BAD_REQUEST,
         detail='User already exists',
@@ -29,6 +29,9 @@ def get_user(db: Session, id: int):
 def get_username(db: Session, username: str):
     return db.query(User).filter(User.username == username).first()
 
+def get_usermail(db: Session, email: str):
+    return db.query(User).filter(User.email == email).first()
+
 
 def get_users(db: Session):
     return db.query(User).all()
@@ -39,5 +42,4 @@ def is_admin(user: User = Depends(get_current_user)):
         status_code=status.HTTP_403_FORBIDDEN,
         detail='Access denied',
     )
-    print('Check')
     return user
