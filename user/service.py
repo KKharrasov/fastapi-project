@@ -1,11 +1,11 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import Depends
 from sqlalchemy.orm import Session
 from .models import User
 from fastapi.security import OAuth2PasswordBearer, HTTPAuthorizationCredentials, HTTPBearer
 from passlib.context import CryptContext
 from user.schemas import *
 from datetime import datetime, timedelta
-from jose import jwt, JWTError
+from jose import jwt
 from core.utils import get_db
 from user import errors
 from typing import Optional
