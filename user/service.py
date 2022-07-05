@@ -41,21 +41,6 @@ def authenticate_user(username: str, password: str, db: Session):
     return user.id
 
 
-# def create_user(db: Session, user: UserCreate):
-#     user = User(**user.dict())
-#     if get_username(db, user.username) or get_usermail(db, user.email):
-#         raise HTTPException(
-#         status.HTTP_400_BAD_REQUEST,
-#         detail='User already exists',
-#     )
-#     if user.username == ADMIN_LOGIN and user.password == ADMIN_PASSWORD:
-#         user.sup = True
-#     user.password = get_password_hash(user.password)
-#     db.add(user)
-#     db.commit()
-#     return user
-
-
 def encode_token(**params):
     return jwt.encode(params, SECRET_KEY, algorithm='HS256')
 
