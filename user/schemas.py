@@ -1,7 +1,5 @@
 from pydantic import BaseModel, constr
-from typing import Union
-
-
+from enum import Enum
 
 BaseModel.Config.orm_mode = True
 
@@ -19,18 +17,21 @@ class UserCreate(BaseModel):
     password: constr(min_length=3, max_length=200)
 
 
-class UserDB(UserCreate):
-    pass
+class TokenPurpose(str, Enum):
+    access = 'access'
+    refresh = 'refresh'
 
 
-class UserList(UserCreate):
-    id: int
-
-
-class Token(BaseModel):
+class AuthToken(BaseModel):
     access_token: str
-    token_type: str
+    refresh_token: str
+    expires_in: int
 
 
-class TokenData(BaseModel):
-    username: Union[str, None] = None
+class AuthTokenPayload(BaseModel):
+    user_id: int
+    purpose: TokenPurpose
+
+
+class RefreshTokenParams(BaseModel):
+    refresh_token: str
